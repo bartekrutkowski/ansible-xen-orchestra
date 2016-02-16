@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Created by: Bartek Rutkowski <contact (at) robakdesign (dot) com>
+# https://github.com/bartekrutkowski
+#
+# PROVIDE: xoa
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+# Add the following lines to /etc/rc.conf to enable xoa
+# xoa_enable="YES"
+#
+# xoa_enable (bool):    Set to YES to enable grafana
+#                       Default: NO
+
+. /etc/rc.subr
+
+name="xoa"
+rcvar=xoa_enable
+
+: ${xoa_enable:="NO"}
+
+pidfile="/var/run/${name}.pid"
+procname="{{ xoa_path }}/xo-server/bin/xo-server"
+command="/usr/sbin/daemon"
+command_args="-f -p ${pidfile} -u {{ xoa_user }} ${procname}"
+command_interpreter="node"
+
+start_precmd="xoa_precmd"
+
+xoa_precmd()
+{
+    cd {{ xoa_path }}/xo-server
+}
+
+load_rc_config $name
+run_rc_command "$1"
