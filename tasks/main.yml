@@ -1,2 +1,27 @@
 ---
-# tasks file for xen-orchestra
+# Variable setup.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup/install tasks.
+- include: setup-FreeBSD.yml
+  when: ansible_os_family == 'FreeBSD'
+
+- name: Create xo-server config file
+  template:
+    src: xo-server.yaml.j2
+    dest: "{{ xoa_path}}/xo-server/.xo-server.yaml"
+    mode: 0540
+
+- name: Set xoa directory ownership
+  file:
+    path: "{{ xoa_path }}"
+    group: "{{ xoa_user }}"
+    owner: "{{ xoa_user }}"
+    recurse: yes
+
+- name: Enable xoa service
+  service:
+    name: xoa
+    state: started
+    enabled: yes

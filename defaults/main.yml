@@ -1,2 +1,10 @@
 ---
-# defaults file for xen-orchestra
+xoa_version: "v4.13.0"
+xoa_user: "xoa"
+xoa_path: "/usr/local/xoa"
+xoa_data_path: "{{ xoa_path }}/data"
+xoa_repo: "https://github.com/vatesfr"
+xoa_http_host: "0.0.0.0"
+xoa_http_port: "6666"
+xoa_redis_host: "localhost"
+xoa_redis_port: "6379"
