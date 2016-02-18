@@ -11,14 +11,9 @@
   template:
     src: xo-server.yaml.j2
     dest: "{{ xoa_path}}/xo-server/.xo-server.yaml"
-    mode: 0540
-
-- name: Set xoa directory ownership
-  file:
-    path: "{{ xoa_path }}"
     group: "{{ xoa_user }}"
     owner: "{{ xoa_user }}"
-    recurse: yes
+    mode: 0640
 
 - name: Enable xoa service
   service:

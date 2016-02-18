@@ -1,2 +1,2 @@
 ---
-xoa_startup_path: "/usr/local/etc/rc.d/xoa"
+xoa_service_path: "/usr/local/etc/rc.d/xoa"

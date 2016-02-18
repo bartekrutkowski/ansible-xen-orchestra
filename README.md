@@ -1,7 +1,7 @@
 Ansible Xen Orchestra
 =========
 
-Ansible role for building Xen Orchestra Appliance (https://xen-orchestra.com)
+Ansible role for building Xen Orchestra (https://xen-orchestra.com) on FreeBSD and Linux systems.
 
 Requirements
 ------------
@@ -25,7 +25,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: bartekrutkowski.xen-orchestra }
 
 License
 -------
