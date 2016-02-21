@@ -1,0 +1,81 @@
+---
+- name: Install NodeSource repo for NodeJS and npm
+  yum:
+    name: "{{ nodesource_repo_url }}"
+    state: present
+
+- name: Install required build dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - autoconf
+  - git
+  - make
+  - nodejs
+  - python
+  - libpng
+  - sudo
+
+- name: Create unprivileged xoa user
+  user:
+    name: "{{ xoa_user }}"
+    shell: "/usr/sbin/nologin"
+    home: "{{ xoa_path }}"
+    createhome: no
+
+- name: Create xoa directories
+  file:
+    path: "{{ item }}"
+    group: "{{ xoa_user }}"
+    owner: "{{ xoa_user }}"
+    mode: 0750
+    state: directory
+  with_items:
+  - "{{ xoa_path }}"
+  - "{{ xoa_data_path }}"
+
+- name: Check out xoa sources
+  git:
+    repo: "{{ xoa_repo }}/{{ item }}.git"
+    version: "{{ xoa_version }}"
+    dest: "{{ xoa_path }}/{{ item }}"
+  with_items:
+  - xo-server
+  - xo-web
+  become: yes
+  become_user: "{{ xoa_user }}"
+
+- name: Install xo-server node dependencies
+  npm:
+    path: "{{ xoa_path }}/xo-server"
+  become: yes
+  become_user: "{{ xoa_user }}"
+
+- name: Build xo-server node code
+  shell: npm run build --progress=false --production
+  args:
+    chdir: "{{ xoa_path }}/xo-server"
+  become: yes
+  become_user: "{{ xoa_user }}"
+
+- name: Install xo-web node dependencies
+  npm:
+    path: "{{ xoa_path }}/xo-web"
+  become: yes
+  become_user: "{{ xoa_user }}"
+
+- name: Build xo-web node code
+  shell: npm run build --progress=false --production
+  args:
+    chdir: "{{ xoa_path }}/xo-web"
+  become: yes
+  become_user: "{{ xoa_user }}"
+
+- name: Create xoa service script
+  template:
+    src: service-RedHat.j2
+    dest: "{{ xoa_service_path }}"
+    group: root
+    owner: root
+    mode: 0540
