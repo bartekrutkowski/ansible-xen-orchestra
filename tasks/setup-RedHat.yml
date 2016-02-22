@@ -11,10 +11,11 @@
   with_items:
   - autoconf
   - git
+  - libpng
+  - libselinux-python
   - make
   - nodejs
   - python
-  - libpng
   - sudo
 
 - name: Create unprivileged xoa user
