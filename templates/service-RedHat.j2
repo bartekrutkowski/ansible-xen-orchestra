@@ -1,0 +1,12 @@
+[Unit]
+Description=Xen Orchestra web GUI for XenServer and Xen
+After=network.target
+
+[Service]
+WorkingDirectory={{ xoa_path }}/xo-server
+ExecStart={{ xoa_path }}/xo-server/bin/xo-server
+User={{ xoa_user }}
+Group={{ xoa_user }}
+
+[Install]
+WantedBy=multi-user.target
