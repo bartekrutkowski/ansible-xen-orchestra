@@ -11,8 +11,14 @@ galaxy_info:
     - 10.1
     - 10.2
     - 9.3
+  - name: EL
+    versions:
+    - 7
   galaxy_tags:
   - freebsd
+  - el7
+  - rhel
+  - centos
   - xenserver
   - xen
   - gui
