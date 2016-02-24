@@ -1,6 +1,6 @@
 galaxy_info:
   author: bartekrutkowski
-  description: Xen Orchestra Appliance for FreeBSD/Linux
+  description: Xen Orchestra web GUI for FreeBSD/Linux
   company: "PixeWare LTD"
   license: license (BSD)
   min_ansible_version: 1.9
