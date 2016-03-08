@@ -1,5 +1,4 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
   roles:
-    - xen-orchestra
+    - role_under_test
